@@ -1,11 +1,9 @@
 # `anonymize-mysqldump`
 
-[![CircleCI](https://circleci.com/gh/humanmade/go-anonymize-mysqldump.svg?style=svg&circle-token=ebedd768d31011e20aff68c78694a171e62a7ec0)](https://circleci.com/gh/humanmade/go-anonymize-mysqldump)
-
 Allows you to pipe data from `mysqldump` or an SQL file and anonymize it:
 
 ```sh
-mysqldump -u yada -pbadpass -h db | anonymize-mysqldump --config config.json > anonymized.sql
+mysqldump -P {port} -h {host} -u {user} -p {databaseName}  | anonymize-mysqldump --config config.json > anonymized.sql
 ```
 
 ```
@@ -18,27 +16,12 @@ Arguments:
 
   -h  --help    Print help information
   -c  --config  Path to config.json
-```
-
-## Installation
-
-You can download the binary for your system from the [Releases](https://github.com/humanmade/go-anonymize-mysqldump/releases/) page. Once downloaded and `gunzip`'d, move it to a location in your path such as `/usr/local/bin` and make it executable. For instance, to download the MacOS binary for 64 bit platforms (this is most common):
-
-```sh
-LATEST="0.3.0"
-curl -OL https://github.com/humanmade/go-anonymize-mysqldump/releases/download/$LATEST/go-anonymize-mysqldump_darwin_amd64.gz
-gunzip go-anonymize-mysqldump_darwin_amd64.gz
-mv go-anonymize-mysqldump_darwin_amd64 /usr/local/bin/anonymize-mysqldump
-chmod +x /usr/local/bin/anonymize-mysqldump
+``
 ```
 
 ## Usage
 
 This tool is designed to read a file stream over STDIN and produce an output over STDOUT. A config file is required and can be provided via the `-c` or `--config` flag. An example config for anonymizing a WordPress database is provided at [`config.example.json`](./config.example.json):
-
-```sh
-curl -LO https://raw.githubusercontent.com/humanmade/go-anonymize-mysqldump/master/config.example.json
-```
 
 Whenever the tool experiences an error, it will output a log to STDERR. If you wish to not see that output while the command is running, redirect it to some other file (or `/dev/null` if you don't care):
 
